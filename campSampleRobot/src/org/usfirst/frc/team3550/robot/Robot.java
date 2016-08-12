@@ -94,10 +94,10 @@ public class Robot extends SampleRobot {
     SendableChooser chooser;
 
     public Robot() {
-    	moteurDeplacementAvantDroite = new Talon(1);
-        moteurDeplacementAvantGauche = new Talon(3);
-        moteurDeplacementArriereDroite = new Talon(0);
-        moteurDeplacementArriereGauche  = new Talon(2);
+    	moteurDeplacementAvantDroite = new Talon(2);
+        moteurDeplacementAvantGauche = new Talon(0);
+        moteurDeplacementArriereDroite = new Talon(3);
+        moteurDeplacementArriereGauche  = new Talon(1);
         
         myRobot = new RobotDrive(moteurDeplacementAvantGauche, moteurDeplacementArriereGauche,
 				   moteurDeplacementAvantDroite, moteurDeplacementArriereDroite); 
@@ -224,17 +224,19 @@ public class Robot extends SampleRobot {
             	  desactivateBoth();
         
         if (getJoystickCoPilote().getRawButton(2)) { // a developper en ajoutant eventuellement un delai pour ce moteur et des limites switches
+        	pistonChargeur.set(DoubleSolenoid.Value.kReverse);
+        }else if(getJoystickCoPilote().getRawButton(1)){
+        	//SmartDashboard.putBoolean("ChargeurON", joystickCoPilote.getRawButton(2));
         	pistonChargeur.set(DoubleSolenoid.Value.kForward);
         }else
-        	//SmartDashboard.putBoolean("ChargeurON", joystickCoPilote.getRawButton(2));
-        	pistonChargeur.set(DoubleSolenoid.Value.kReverse);
             pistonChargeur.set(DoubleSolenoid.Value.kOff);
         
-         if (getJoystickCoPilote().getRawButton(1)) { 
-        	 pistonShooter.set(DoubleSolenoid.Value.kForward);
-          }else
+         if (getJoystickCoPilote().getRawButton(5)) { 
+        	 pistonShooter.set(DoubleSolenoid.Value.kReverse);
+          }else if(getJoystickCoPilote().getRawButton(6)){ 
         	//SmartDashboard.putBoolean("ShooterON", joystickCoPilote.getRawButton(1));
-		    pistonShooter.set(DoubleSolenoid.Value.kReverse);
+		    pistonShooter.set(DoubleSolenoid.Value.kForward);
+          }else
             pistonShooter.set(DoubleSolenoid.Value.kOff);
 		   // SmartDashboard.putBoolean(return pistonShooter.get());
         	 /*if (getJoystickCoPilote().getRawButton(5)){
@@ -355,13 +357,13 @@ public class Robot extends SampleRobot {
 
 
 	public double getjoystickPiloteX() { //x axis on the gamePadPilote right joystick
-		//return joystickPilote.getRawAxis(2);
-		return joystickPilote.getRawAxis(0); //jeremie
+		return joystickPilote.getRawAxis(2);
+		//return joystickPilote.getRawAxis(0); //jeremie
 	}
 	
 	public double getjoystickPiloteY() { //y axis on the gamePadPilote left joystick
-		return joystickPilote.getRawAxis(2); //jeremie
-		//return joystickPilote.getRawAxis(1);
+		//return joystickPilote.getRawAxis(2); //jeremie
+		return joystickPilote.getRawAxis(1);
 	}
 	
 	public Joystick getJoystickCoPilote() { //CoPilote joystick on usb1
